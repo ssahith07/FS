@@ -12,7 +12,7 @@
 // If no houses with a visibility of 1 exist in the range, or if the range extends 
 // beyond the boundaries of the array, the average skyline height for that house is -1.
 
-// Return an array skyline_avgs of length n, where skyline_avgs[i] is the average 
+// s[i] is the average 
 // skyline height for the neighborhood centered at index i.
 
 // Input Format:
