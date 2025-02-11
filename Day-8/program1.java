@@ -47,7 +47,7 @@ class TreeNode{
         this.right = null;
     }
 }
-public class Test{
+public class program1{
    static TreeNode build_treel(int[] a, int ind, int n) {
         if (ind>=n || a[ind] == -1) return null;
         TreeNode root = new TreeNode(a[ind]);
