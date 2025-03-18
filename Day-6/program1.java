@@ -66,7 +66,7 @@ public class program1 {
             return null;
         }
 
-        int rootVal = al.get(postIndex--);
+        int rootVal = al.get(postIndex--);  
         Treenode root = new Treenode(rootVal);
         int rootIndex = inMap.get(rootVal);
 
@@ -75,6 +75,26 @@ public class program1 {
 
         return root;
     }
+
+    public static void levelOrder(Treenode root) {
+        if (root == null) return;
+    
+        Queue<Treenode> queue = new LinkedList<>();
+        queue.add(root);
+    
+        List<Integer> result = new ArrayList<>();
+    
+        while (!queue.isEmpty()) {
+            Treenode current = queue.poll();
+            result.add(current.root);
+    
+            if (current.left != null) queue.add(current.left);
+            if (current.right != null) queue.add(current.right);
+        }
+    
+        System.out.println(result);
+    }
+    
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
