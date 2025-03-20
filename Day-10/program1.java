@@ -136,16 +136,19 @@ class day10program1 {
     }
 
     public static void main(String args[]) {
-        Scanner sc = new Scanner(System.in);
-        String s[] = sc.nextLine().split("\\s+");
-        int a[] = new int[s.length];
-        for (int i = 0; i < s.length; i++) {
-            a[i] = Integer.parseInt(s[i]);
-        }
-        TreeNode root = createTree(a);
-        TreeNode Fliproot = flip(root);
-        List<Integer> res = levelOrder(Fliproot);
-        for (int i = 0; i < res.size(); i++)
-            System.out.print(res.get(i) + " ");
+        // Scanner sc = new Scanner(System.in);
+        // String s[] = sc.nextLine().split("\\s+");
+        // int a[] = new int[s.length];
+        // for (int i = 0; i < s.length; i++) {
+        //     a[i] = Integer.parseInt(s[i]);
+        // }
+        // TreeNode root = createTree(a);
+        // TreeNode Fliproot = flip(root);
+        // List<Integer> res = levelOrder(Fliproot);
+        // for (int i = 0; i < res.size(); i++)
+        //     System.out.print(res.get(i) + " ");
+        Set<String> s = new HashSet<>();
+        String st = "Aa1234";
+        System.out.println(st.matches("/d{4}"));
     }
 }

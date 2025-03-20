@@ -75,5 +75,4 @@ public class program2 {
         System.out.println(l);
 
     }
-
 }
