@@ -43,17 +43,16 @@ Sample Output-2:
 */
 
 import java.util.*;
-
 public class program3 {
     static int sum(int k){
         int res=0;
-        while (k>0) {
+        while (k>0){
             res += k%10;
             k/=10;
         }
         return res;
     }
-    public static void main(String[] args) {
+    public static void main(String[] args){
         int n=13;
         HashMap<Integer,Integer> hm = new HashMap<>();
         int max=0,count=0;
