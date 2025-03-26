@@ -1,0 +1,29 @@
+<html>
+    <body>
+        <h1>Group Chat</h1>
+        <div id="chat"></div>
+        <input id="msg" placeholder="Enter message here..."/>
+        <button id="button" onclick="handleSubmit()">Send</button>
+    </body>
+    <script>
+        let ws = new WebSocket("ws://192.168.5.15:8080");
+        
+        let chat = document.getElementById("chat");
+
+        ws.onmessage = (message) =>{
+            let p = document.createElement('p');
+            p.textContent = message.data.toString();
+            chat.appendChild(p);
+        } 
+        const handleSubmit = () => {
+            let input = document.getElementById("msg");
+            let data = input.value;
+
+            console.log(data);
+
+            ws.send(data.toString());
+
+            input.value = "";
+        }
+    </script>
+</html>

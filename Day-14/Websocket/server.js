@@ -17,7 +17,7 @@ wss.on('connection', (ws) => {
 
     if (parts[0] === 'INSERT') {
       const name = parts[1];
-      const salary = parseInt(parts[2]);
+      const salary = parseFloat(parts[2]);
 
       if (salary) {
           employees.push({ id: employeeId++, name, salary });
