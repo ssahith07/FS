@@ -82,8 +82,8 @@ public class program2{
         Treenode root = new Treenode(rootVal);
         int rootIndex = inMap.get(rootVal);
 
-        root.left = create_tree(inord,preord, st, rootIndex - 1, inMap);
         root.right = create_tree(inord,preord, rootIndex + 1, end, inMap);
+        root.left = create_tree(inord,preord, st, rootIndex - 1, inMap);
 
         return root;
     }

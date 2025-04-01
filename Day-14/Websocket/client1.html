@@ -3,7 +3,7 @@
         <h1>Group Chat</h1>
         <div id="chat"></div>
         <input id="msg" placeholder="Enter message here..."/>
-        <button id="button" onclick="handleSubmit()">Send</button>
+        <button id="button" onclick={handleSubmit}>Send</button>
     </body>
     <script>
         let ws = new WebSocket("ws://192.168.5.15:8080");

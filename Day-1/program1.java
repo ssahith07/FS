@@ -77,7 +77,7 @@ public class program1{
 
         for(int k=0;k<(r-l+1);k++){
             int pro=1;
-            for(int i=0;i<n;i++){
+            for(int i=0;i<n;i++){   //2 -1 3 4
                 pro*=nums[i];
                 if(i>=(l-1)){
                     if(pro>0){
@@ -90,7 +90,7 @@ public class program1{
                 }
             }
             l++;
-            
+
         }
         if(min!=Integer.MAX_VALUE){
             System.out.println(min);

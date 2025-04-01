@@ -48,19 +48,12 @@ class TreeNode{
     }
 }
 public class program1{
-   static TreeNode build_treel(int[] a, int ind, int n) {
-        if (ind>=n || a[ind] == -1) return null;
-        TreeNode root = new TreeNode(a[ind]);
-        root.left = build_treel(a, 2*ind+1, n);
-        root.right = build_treel(a, 2*ind+2, n);
-        return root;
-   }
 
     static TreeNode build_treer(int[] a, int ind, int n) {
         if (ind>=n || a[ind]==-1) return null;
         TreeNode root = new TreeNode(a[ind]);
-        root.right = build_treer(a, 2*ind+1, n);
-        root.left = build_treer(a, 2*ind+2, n);
+        root.left = build_treer(a, 2*ind+1, n);
+        root.right = build_treer(a, 2*ind+2, n);
         return root;
     }
 
@@ -68,8 +61,8 @@ public class program1{
         if (t1 == null && t2 == null) return true;
         if (t1 == null || t2 == null) return false;
         return (t1.val == t2.val) &&
-               isSame(t1.left, t2.left) &&
-               isSame(t1.right, t2.right);
+               isSame(t1.left, t2.right) &&
+               isSame(t1.right, t2.left);
     }
 
     public static void main(String[] args) {
@@ -81,10 +74,9 @@ public class program1{
         }
 
         int n = a.length;
-        TreeNode r1 = build_treel(a, 0, n);
         TreeNode r2 = build_treer(a, 0, n);
 
-        // System.out.println(isSame(r1, r2));
+        System.out.println(isSame(r2.left, r2.right));
     }
 }
 
