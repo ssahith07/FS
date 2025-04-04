@@ -95,5 +95,7 @@ public class program1 {
         } else {
             System.out.println(mirror(root.left, root.right));
         }
+        List<List<Integer>> al = new ArrayList<>();
+        
     }
 }
