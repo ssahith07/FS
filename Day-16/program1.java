@@ -38,31 +38,35 @@ Sample Output:
 import java.util.*;
 
 public class program1 {
-    static boolean isHarmonic(String s){
-        int flag=0;
-        for(int i=0;i<s.length();i++){
-            if(s.contains((s.charAt(i)+32)+"")||s.contains((s.charAt(i)-32)+"")){
-                flag = 1;
-            }else{
-                flag=0;
-            }
-        }
-        return flag==0?false:true;
-    }
-    public static void main(String[] args) {
-        String s = "QcvcCcq";
-        String s1 = "";
-        String res = "";
-        for(int i=0;i<s.length();i++){
-            s1+=s.charAt(i);
-            for (int j = 0; j < s.length(); j++) {
-                s1+=s.charAt(j);
-                if(isHarmonic(s1) && res.length()<s1.length()){
-                    res = s1;
+    public static void main(String args[]){
+        Scanner sc=new Scanner(System.in);
+        int max=0;
+        String result="";
+        String s=sc.next();
+        for(int i=0;i<s.length()-1;i++){
+            for(int j=i+1;j<=s.length();j++){
+                String sub=s.substring(i,j);
+                if(isharmonic(sub) && sub.length() > max){
+                    max=sub.length();
+                    result=sub;
                 }
             }
-            s1="";
         }
-        System.out.println(res);
+        System.out.print(result);
+    }
+    private static boolean isharmonic(String sub){
+        HashSet<Character> hs=new HashSet<>();
+        for(char c:sub.toCharArray()){
+            hs.add(c);
+        }
+        for (Character c : hs){
+            if (Character.isLowerCase(c) && !hs.contains(Character.toUpperCase(c))) {
+                return false;
+            }
+            if (Character.isUpperCase(c) && !hs.contains(Character.toLowerCase(c))){
+                return false;
+            }
+        }
+        return true;
     }
 }
