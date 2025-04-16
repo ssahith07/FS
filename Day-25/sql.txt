@@ -1,0 +1,214 @@
+/*
+Write a query to display all records from the Students table.
+
+
+---------------
+Database Schema
+---------------
+
+Students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    email VARCHAR(100),
+    enrollment_year INT
+);
+
+Courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(100),
+    instructor VARCHAR(50)
+);
+
+Enrollments (
+    enrollment_id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    grade CHAR(1),
+    FOREIGN KEY (student_id) REFERENCES Students(student_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(course_id)
+);
+
+Sample Output:
+--------------
+student_id  name    email               enrollment_year                                 
+1           Alice   alice@example.com   2023                                    
+2           Bob     bob@example.com     2022 
+
+
+*/
+use univ;
+select * from Students;
+
+/*
+Write a query to list all students, sorted alphabetically by their names.
+
+
+
+
+
+Sample Output:
+--------------
+student_id  name    email               enrollment_year                                 
+1           Alice   alice@example.com   2023                                    
+2           Bob     bob@example.com     2022                                            
+*/
+
+use univ;
+select * from Students
+order by name;
+
+/*
+Write a query to retrieve students who enrolled in the year 2023.
+
+
+
+
+
+Sample Output:
+--------------
+student_id  name    email               enrollment_year                                 
+1           Alice   alice@example.com       2023                                    
+3           Charlie charlie@example.com     2023 
+
+
+*/
+use univ;
+select * from Students
+where enrollment_year=2023;
+
+/*
+Write a query to find students who have a kmec.com email address.
+
+
+
+
+
+Sample Output:
+--------------
+student_id      name    email           enrollment_year 
+1               Alice   alice@kmec.com      2023                                            
+
+
+*/
+use univ;
+select * from Students
+where email like "%kmec.com";
+
+/*
+Write a query to find students enrolled in the course having course ID is 101.
+
+
+
+
+
+Sample Output:
+--------------
+student_id  name    email           enrollment_year                                 
+1           Alice   alice@kmec.com  2023                                            
+2           Bob     bob@ngit.com    2022                                            
+
+*/
+use univ;
+select s.student_id,s.name,s.email,s.enrollment_year from Students as s
+join Enrollments as e on s.student_id = e.student_id
+join Courses as c on e.course_id=c.course_id
+where c.course_id=101;
+
+/*
+Write a query that shows the number of students enrolled per course.
+
+
+
+
+
+Sample Output:
+--------------
+course_name         total_students                                                  
+Database Systems        10                                                      
+Operating Systems       9                                                       
+
+*/
+use univ;
+
+select c.course_name,count(*) as total_students from Students as s
+join Enrollments as e on s.student_id=e.student_id
+join Courses as c on c.course_id=e.course_id
+group by c.course_name;
+
+
+/*
+Write a query to find the number of courses each student is enrolled in.
+
+
+Sample Output:
+--------------
+name    courses_enrolled                                                        
+Alice   3                                                                       
+Bob     3
+
+
+*/
+use univ;
+
+select s.name, count(e.course_id) as courses_enrolled from Students as s
+join Enrollments as e on s.student_id = e.student_id
+group by s.student_id,s.name;
+
+/*
+How many students enrolled in each year? Write a query using GROUP BY
+
+
+
+
+
+Sample Output:
+--------------
+enrollment_year student_count                                                   
+2023            12                                                                      
+
+*/
+use univ;
+
+select enrollment_year, count(*) as student_count from Students
+group by enrollment_year;
+
+/*
+Find students enrolled in more than 2 courses using GROUP BY and HAVING.
+
+
+Sample Output:
+--------------
+student_id  course_count                                                    
+1               3                                                                       
+2               3                                                                       
+*/
+use univ;
+
+select s.student_id , count(c.course_id) as course_count from Students as s
+join Enrollments as e on s.student_id = e.student_id
+join Courses as c on e.course_id = c.course_id
+group by student_id
+having count(c.course_id)>2
+order by s.student_id;
+
+
+/*
+Write a query to find courses with atleast 10 students enrolled.
+
+
+
+
+
+Sample Output:
+--------------
+course_id   student_count                                                   
+101             10                                                                      
+
+*/
+use univ;
+
+select c.course_id , count(s.student_id) as student_count from Students as s
+join Enrollments as e on s.student_id = e.student_id
+join Courses as c on e.course_id = c.course_id
+group by c.course_id
+having count(s.student_id)>=10;

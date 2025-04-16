@@ -41,3 +41,38 @@ Sample Output-2:
 ----------------
 false
 */
+
+import java.util.*;
+
+public class program1{
+    static boolean backtrack(int ind, int[] a,int[] s,int side){
+        if(ind==a.length){
+            for(int i=0;i<4;i++){
+                if(s[i]!=side) return false;
+            }
+            return true;
+        }
+        for(int i=0;i<4;i++){
+            if(s[i]+a[ind]<=side){
+                s[i]+=a[ind];
+                if(backtrack(ind+1,a,s,side)) return true;
+                s[i]-=a[ind];
+            }
+        }
+        return false;
+    }
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int[] a = new int[n];
+        for(int i=0;i<n;i++){
+            a[i] = sc.nextInt();
+        }
+        int sum = Arrays.stream(a).sum();
+        if(sum%4==0){
+            int[] s = new int[4];
+            System.out.println(backtrack(0,a,s,sum/4) );
+        }
+        else System.out.println(false);
+    }
+}
