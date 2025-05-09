@@ -47,3 +47,4 @@
 // Explanation:
 // ------------
 // No empty place after the last plant in the row, so retrun -1.
+
