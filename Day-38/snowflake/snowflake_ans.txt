@@ -1,0 +1,193 @@
+<!--
+Note:Create a Worksheet with the name storedprocedure
+
+Execute the queries in given file first then proceed with the question given 
+below.(Download from study material)
+
+Question::
+=======================================
+
+Step 1: Create the Stored Procedure
+Q1.
+Write a stored procedure named UPDATE_SALARY_BY_DEPT inside the EMPLOYEE_SCHEMA
+schema.
+
+It should take two parameters:
+
+DEPT_NAME (type: STRING)
+
+INCREMENT_PCT (type: FLOAT)
+
+It should increase the salary of all employees in the given department by the
+given percentage.
+
+Tip: Use the UPDATE command inside the procedure.
+
+Step 2: Check Current Salaries Before Update
+Q2.
+Before running the procedure, check and list the current salary of all 
+employees in the 'IT' department.
+
+Write a query to select EMP_ID, FIRST_NAME, and SALARY for employees from the
+IT department.
+
+Save or note down these salary values.
+
+ SQL Hint: Use a SELECT query with WHERE DEPARTMENT = 'IT'.
+
+Step 3: Run the Procedure
+Q3.
+Execute your stored procedure to increase the salary by 5% for all employees
+in the 'IT' department.
+
+Write the CALL command to invoke the procedure.
+
+Make sure the procedure runs without any errors and returns a success message.
+
+SQL Hint: Use CALL EMPLOYEE_SCHEMA.UPDATE_SALARY_BY_DEPT('IT', 5);.
+
+
+Step 4: Check Updated Salaries After Update
+Q4.
+After running the procedure, check again the salary of employees in the 'IT'
+department.
+
+Write the same SELECT query again. (After running this select query,Test
+your answer here)
+
+
+-->
+
+worksheet ans copy :
+
+
+CREATE OR REPLACE DATABASE EMPLOYEE_DB;
+ CREATE OR REPLACE SCHEMA EMPLOYEE_SCHEMA;
+ CREATE OR REPLACE TABLE EMPLOYEE_SCHEMA.EMPLOYEE (
+    EMP_ID NUMBER AUTOINCREMENT,
+    FIRST_NAME STRING,
+    LAST_NAME STRING,
+    EMAIL STRING,
+    DEPARTMENT STRING,
+    SALARY NUMBER(10,2),
+    JOIN_DATE DATE,
+    PRIMARY KEY (EMP_ID)
+ );
+CREATE OR REPLACE PROCEDURE 
+EMPLOYEE_SCHEMA.ADD_EMPLOYEES_FROM_JSON(EMPLOYEES_JSON STRING)
+ RETURNS STRING
+ LANGUAGE SQL
+ AS
+ $$
+ BEGIN
+    INSERT INTO EMPLOYEE_SCHEMA.EMPLOYEE (FIRST_NAME, LAST_NAME, EMAIL, 
+DEPARTMENT, SALARY, JOIN_DATE)
+    SELECT
+        value:First_Name::STRING,
+        value:Last_Name::STRING,
+        value:Email::STRING,
+        value:Department::STRING,
+        value:Salary::NUMBER(10,2),
+        value:Join_Date::DATE
+    FROM
+        TABLE(FLATTEN(INPUT => PARSE_JSON(:EMPLOYEES_JSON)));
+    RETURN 'Employees Added Successfully';
+ END;
+ $$;
+  CALL EMPLOYEE_SCHEMA.ADD_EMPLOYEES_FROM_JSON('[
+  {"First_Name":"John", "Last_Name":"Doe", "Email":"john.doe@example.com", 
+"Department":"IT", "Salary":75000.00, "Join_Date":"2025-01-10"},
+  {"First_Name":"Jane", "Last_Name":"Smith", "Email":"jane.smith@example.com", 
+"Department":"HR", "Salary":68000.00, "Join_Date":"2025-02-15"},
+  {"First_Name":"Mike", "Last_Name":"Brown", "Email":"mike.brown@example.com", 
+"Department":"Finance", "Salary":72000.00, "Join_Date":"2025-03-01"},
+  {"First_Name":"Sara", "Last_Name":"Davis", "Email":"sara.davis@example.com", 
+"Department":"Marketing", "Salary":69000.00, "Join_Date":"2025-03-05"},
+  {"First_Name":"Chris", "Last_Name":"Wilson", 
+"Email":"chris.wilson@example.com", "Department":"Sales", "Salary":71000.00, 
+"Join_Date":"2025-04-01"},
+  {"First_Name":"Laura", "Last_Name":"Taylor", 
+"Email":"laura.taylor@example.com", "Department":"IT", "Salary":77000.00, 
+"Join_Date":"2025-04-10"},
+  {"First_Name":"Robert", "Last_Name":"Anderson", 
+"Email":"robert.anderson@example.com", "Department":"HR", "Salary":66000.00, 
+"Join_Date":"2025-05-12"},
+  {"First_Name":"Emily", "Last_Name":"Thomas", 
+"Email":"emily.thomas@example.com", "Department":"Finance", "Salary":73000.00, 
+"Join_Date":"2025-05-20"},
+  {"First_Name":"Daniel", "Last_Name":"Jackson", 
+"Email":"daniel.jackson@example.com", "Department":"Marketing", 
+"Salary":64000.00, "Join_Date":"2025-06-15"},
+  {"First_Name":"Sophia", "Last_Name":"White", 
+"Email":"sophia.white@example.com", "Department":"Sales", "Salary":70000.00, 
+"Join_Date":"2025-06-20"},
+  {"First_Name":"Matthew", "Last_Name":"Harris", 
+"Email":"matthew.harris@example.com", "Department":"IT", "Salary":76000.00, 
+"Join_Date":"2025-07-01"},
+  {"First_Name":"Olivia", "Last_Name":"Martin", 
+"Email":"olivia.martin@example.com", "Department":"HR", "Salary":68000.00, 
+"Join_Date":"2025-07-10"},
+  {"First_Name":"Luke", "Last_Name":"Thompson", 
+"Email":"luke.thompson@example.com", "Department":"Finance", "Salary":75000.00, 
+"Join_Date":"2025-08-05"},
+  {"First_Name":"Ava", "Last_Name":"Garcia", "Email":"ava.garcia@example.com", 
+"Department":"Marketing", "Salary":66000.00, "Join_Date":"2025-08-12"},
+  {"First_Name":"Ethan", "Last_Name":"Martinez", 
+"Email":"ethan.martinez@example.com", "Department":"Sales", "Salary":72000.00, 
+"Join_Date":"2025-09-01"},
+  {"First_Name":"Isabella", "Last_Name":"Robinson", 
+"Email":"isabella.robinson@example.com", "Department":"IT", "Salary":78000.00, 
+"Join_Date":"2025-09-15"},
+  {"First_Name":"James", "Last_Name":"Clark", "Email":"james.clark@example.com", 
+"Department":"HR", "Salary":67000.00, "Join_Date":"2025-10-10"},
+  {"First_Name":"Mia", "Last_Name":"Rodriguez", 
+"Email":"mia.rodriguez@example.com", "Department":"Finance", "Salary":74000.00, 
+"Join_Date":"2025-10-20"},
+  {"First_Name":"Benjamin", "Last_Name":"Lewis", 
+"Email":"benjamin.lewis@example.com", "Department":"Marketing", 
+"Salary":65000.00, "Join_Date":"2025-11-01"},
+  {"First_Name":"Charlotte", "Last_Name":"Lee", 
+"Email":"charlotte.lee@example.com", "Department":"Sales", "Salary":71000.00, 
+"Join_Date":"2025-11-15"}
+ ]');
+
+ CREATE OR REPLACE PROCEDURE EMPLOYEE_SCHEMA.UPDATE_SALARY_BY_DEPT(
+    DEPT_NAME STRING,
+    INCREMENT_PCT FLOAT
+)
+RETURNS STRING
+LANGUAGE SQL
+AS
+$$
+BEGIN
+    UPDATE EMPLOYEE_SCHEMA.EMPLOYEE
+    SET SALARY = SALARY * (1 + INCREMENT_PCT / 100)
+    WHERE DEPARTMENT = DEPT_NAME;
+    
+    RETURN 'Salary Updated Successfully';
+END;
+$$;
+
+SELECT EMP_ID, FIRST_NAME, SALARY
+FROM EMPLOYEE_SCHEMA.EMPLOYEE
+WHERE DEPARTMENT = 'IT';
+
+CREATE OR REPLACE PROCEDURE EMPLOYEE_SCHEMA.UPDATE_SALARY_BY_DEPT(
+    DEPT_NAME STRING,
+    INCREMENT_PCT FLOAT
+)
+RETURNS STRING
+LANGUAGE SQL
+AS
+$$
+BEGIN
+    -- Use proper parameter referencing with a colon (for Snowflake or similar DBs)
+    UPDATE EMPLOYEE_SCHEMA.EMPLOYEE
+    SET SALARY = SALARY * (1 + :INCREMENT_PCT / 100)
+    WHERE DEPARTMENT = :DEPT_NAME;
+    
+    RETURN 'Salary updated successfully';
+END;
+$$;
+
+CALL EMPLOYEE_SCHEMA.UPDATE_SALARY_BY_DEPT('IT', 5);
